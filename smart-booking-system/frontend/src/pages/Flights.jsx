@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import axios from 'axios';
 
+import { notify } from '../utils/notify';
+
 const Flights = () => {
 
   const [formData, setFormData] = useState({ from: '', to: '', date: '' });
@@ -24,7 +26,7 @@ const Flights = () => {
 
     } catch (err) {
 
-      alert('Error searching flights');
+      notify('Error searching flights', 'error');
 
     }
 
@@ -46,11 +48,11 @@ const Flights = () => {
 
       });
 
-      alert('Booking successful');
+      notify('Booking successful', 'success');
 
     } catch (err) {
 
-      alert(err.response.data.msg);
+      notify(err?.response?.data?.msg || 'Booking failed', 'error');
 
     }
 

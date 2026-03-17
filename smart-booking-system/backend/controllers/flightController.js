@@ -1,17 +1,13 @@
-const Flight = require('../models/Flight');
-
-const Booking = require('../models/Booking');
+const { getDb, createId } = require('../db');
 
 exports.searchFlights = async (req, res) => {
 
   const { from, to, date } = req.query;
 
   try {
-
-    const flights = await Flight.find({ from, to, date: new Date(date) });
-
+    const db = getDb();
+    const flights = db.data.flights.filter(f => f.from === from && f.to === to && f.date === date);
     res.json(flights);
-
   } catch (err) {
 
     res.status(500).json({ msg: 'Server error' });
@@ -25,14 +21,20 @@ exports.bookFlight = async (req, res) => {
   const { flightId } = req.body;
 
   try {
-
-    const flight = await Flight.findById(flightId);
+    const db = getDb();
+    const flight = db.data.flights.find(f => f._id === flightId);
 
     if (!flight) return res.status(404).json({ msg: 'Flight not found' });
 
-    const booking = new Booking({ user: req.user.id, type: 'flight', flight: flightId });
+    db.data.bookings.push({
+      _id: createId('booking'),
+      user: req.user.id,
+      type: 'flight',
+      flight: flightId,
+      date: new Date().toISOString()
+    });
 
-    await booking.save();
+    await db.write();
 
     res.json({ msg: 'Booking successful' });
 

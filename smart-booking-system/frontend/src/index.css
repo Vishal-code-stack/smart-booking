@@ -108,18 +108,105 @@ button {
 
   cursor: pointer;
 
+  border-radius: 0.25rem;
+
+  transition: transform 150ms ease, background-color 150ms ease;
+
+}
+
+.seat:hover {
+
+  transform: translateY(-2px);
+
 }
 
 .seat.selected {
 
-  background-color: yellow;
+  background-color: #f6c23e;
 
 }
 
 .seat.booked {
 
-  background-color: red;
+  background-color: #e74a3b;
 
   cursor: not-allowed;
+
+}
+
+/* Toast notifications */
+#toast-container {
+
+  position: fixed;
+
+  bottom: 1.5rem;
+
+  right: 1.5rem;
+
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 0.5rem;
+
+  z-index: 9999;
+
+  pointer-events: none;
+
+}
+
+.toast {
+
+  pointer-events: auto;
+
+  background: rgba(0, 0, 0, 0.85);
+
+  color: #fff;
+
+  padding: 0.75rem 1rem;
+
+  border-radius: 0.5rem;
+
+  min-width: 220px;
+
+  max-width: 320px;
+
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+
+  opacity: 0;
+
+  transform: translateY(16px);
+
+  transition: opacity 200ms ease, transform 200ms ease;
+
+  font-size: 0.9rem;
+
+  line-height: 1.3;
+
+}
+
+.toast--visible {
+
+  opacity: 1;
+
+  transform: translateY(0);
+
+}
+
+.toast-info {
+
+  background: #1d4ed8;
+
+}
+
+.toast-success {
+
+  background: #10b981;
+
+}
+
+.toast-error {
+
+  background: #ef4444;
 
 }

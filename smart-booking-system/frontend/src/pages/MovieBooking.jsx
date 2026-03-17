@@ -4,6 +4,8 @@ import { useLocation } from 'react-router-dom';
 
 import axios from 'axios';
 
+import { notify } from '../utils/notify';
+
 const MovieBooking = () => {
 
   const location = useLocation();
@@ -46,25 +48,11 @@ const MovieBooking = () => {
 
       });
 
-      alert('Booking successful');
+      notify('Booking successful', 'success');
 
     } catch (err) {
 
-      alert(err.response.data.msg);
-
-    }
-
-  };
-
-  return (
-
-    <div>
-
-      <h1>Book {movie.name}</h1>
-
-      <div>
-
-        {movie.seats.map(seat => (
+      notify(err?.response?.data?.msg || 'Booking failed', 'error');
 
           <div
 

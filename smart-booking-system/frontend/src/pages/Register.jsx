@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import axios from 'axios';
 
+import { notify } from '../utils/notify';
+
 const Register = () => {
 
   const [formData, setFormData] = useState({ name: '', email: '', password: '' });
@@ -20,11 +22,11 @@ const Register = () => {
 
       localStorage.setItem('token', res.data.token);
 
-      alert('Registered and logged in');
+      notify('Registered and logged in', 'success');
 
     } catch (err) {
 
-      alert(err.response.data.msg);
+      notify(err?.response?.data?.msg || 'Registration failed', 'error');
 
     }
 

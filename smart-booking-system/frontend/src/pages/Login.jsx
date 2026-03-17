@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 
 import axios from 'axios';
 
+import { notify } from '../utils/notify';
+
 const Login = () => {
 
   const [formData, setFormData] = useState({ email: '', password: '' });
@@ -20,11 +22,11 @@ const Login = () => {
 
       localStorage.setItem('token', res.data.token);
 
-      alert('Logged in');
+      notify('Logged in successfully', 'success');
 
     } catch (err) {
 
-      alert(err.response.data.msg);
+      notify(err?.response?.data?.msg || 'Login failed', 'error');
 
     }
 
